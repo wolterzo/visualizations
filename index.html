@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<html>
+<head>
+	<script src="https://d3js.org/d3.v4.min.js"></script>
+	<script src='/graph.js'></script></head>
+<body>
+	<h1> Mushrooms </h1>
+	<div id="labels"></div>
+	<div id="mushroomChart"></div>
+	<script type="text/javascript">
+		d3.csv("/mushrooms.csv", function(d) {
+			console.log(d);
+			makeGraph(d,"cap-color");
+		})
+	</script>
+</body>
+</html>
