@@ -6,12 +6,33 @@
 	<script src='/graph.js'></script></head>
 <body>
 	<h1>Mushrooms</h1>
-	<h2>Cap Shape</h2>
+	<h2 id="attributeName">Cap Shape</h2>
 	<select name="attribute" id="attributeSelect" onChange="refresh()">
 	</select>
 	<div id="mushroomChart"></div>
 	<script type="text/javascript">
-		var attributes = {'cap-shape': "Cap Shape", 'cap-surface': "Cap Surface", 'cap-color': "Cap Color", 'bruises': "Bruises", 'odor': "Odor"};
+		var attributes = {'cap-shape': "Cap Shape", 
+		'cap-surface': "Cap Surface", 
+		'cap-color': "Cap Color", 
+		'bruises': "Bruises", 
+		'odor': "Odor", 
+		'gill-attachment': "Gill Attachment",
+		'gill-spacing': "Gill Spacing",
+		'gill-size':"Gill Size",
+		'gill-color':"Gill Color",
+		'stalk-shape':"Stalk Shape",
+		'stalk-root':"Stalk Root",
+		'stalk-surface-above-ring':"Stalk Surface Above Ring",
+		'stalk-surface-below-ring':"Stalk Surface Below Ring",
+		'stalk-color-above-ring':"Stalk Color Above RIng",
+		'stalk-color-below-ring':"Stalk Color Below Ring",
+		'veil-type':"Veil Type",
+		'ring-number':"Ring Number",
+		'ring-type':"Ring Type",
+		'spore-print-color':"Spore Print Color",
+		'population':"Population",
+		'habitat':"Habitat"
+	};
 		var attributeSelect = document.getElementById("attributeSelect");
 		for(attribute in attributes) {
 			var option = document.createElement("OPTION");
@@ -22,10 +43,23 @@
 
 		function refresh(){
 			d3.csv("/mushrooms.csv", function(d) {
+				d.sort(function(a,b) { 
+					if (a['class'] == b['class']) {
+						return 0;
+					} else if(a['class'] == 'e') {
+						return 1;
+					} else {
+						return -1;
+					}
+				})
 				makeGraph(d,document.getElementById("attributeSelect").value);
 			});
+			document.getElementById("attributeName").innerHTML = attributes[attributeSelect.value];
 		}
 		refresh();
 	</script>
+	<p>
+		Data from <a href="https://www.kaggle.com/uciml/mushroom-classification">UCI Machine Learning<a>.
+	</p>
 </body>
 </html>
